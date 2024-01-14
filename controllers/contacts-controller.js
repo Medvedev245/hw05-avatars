@@ -17,8 +17,9 @@ import {
 } from "../models/Contact.js";
 
 const getAll = async (req, res) => {
-  const { page = 1, limit = 10 } = req.params;
+  //запрос за контактами только этого пользователя
   const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.params;
   const result = await Contact.find({ owner });
   res.json(result);
 };
