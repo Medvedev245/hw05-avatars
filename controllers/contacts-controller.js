@@ -39,12 +39,14 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
   const { _id: owner } = req.user;
-  const { error } = contactAddSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
-  const result = await Contact.create({ ...req.body, owner });
-  res.status(201).json(result);
+  console.log(req.body);
+  console.log(req.file);
+  // const { error } = contactAddSchema.validate(req.body);
+  // if (error) {
+  //   throw HttpError(400, error.message);
+  // }
+  // const result = await Contact.create({ ...req.body, owner });
+  // res.status(201).json(result);
 };
 
 const updateById = async (req, res) => {

@@ -5,7 +5,7 @@ import path from "path";
 
 import { HttpError } from "../Helpers/index.js";
 
-const destination = path.resolve("public", "avatars");
+const destination = path.resolve("tmp");
 
 //1 из 3 настроек мидлвары указывает где сохранияем файл
 // и с каким именем
