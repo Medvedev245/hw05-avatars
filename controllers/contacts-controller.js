@@ -1,10 +1,5 @@
-// import {
-//   listContacts,
-//   getContactById,
-//   removeContact,
-//   addContact,
-//   updateContactById,
-// } from "../models/contacts/index.js";
+import fs from "fs/promises";
+import path from "path";
 import { HttpError } from "../Helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 
@@ -15,6 +10,7 @@ import {
   contactUpdateSchema,
   contactUpdateFavoriteShema,
 } from "../models/Contact.js";
+const avatarPath = path.resolve("public", "avatars");
 
 const getAll = async (req, res) => {
   //запрос за контактами только этого пользователя
@@ -41,12 +37,19 @@ const add = async (req, res) => {
   const { _id: owner } = req.user;
   console.log(req.body);
   console.log(req.file);
-  // const { error } = contactAddSchema.validate(req.body);
-  // if (error) {
-  //   throw HttpError(400, error.message);
-  // }
-  // const result = await Contact.create({ ...req.body, owner });
-  // res.status(201).json(result);
+  //перемещаем файл
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(avatarPath, filename);
+  await fs.rename(oldPath, newPath);
+  //создаем новый путь к перемещенному файлу
+  const poster = path.join("public", "avatars", filename);
+
+  const { error } = contactAddSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, error.message);
+  }
+  const result = await Contact.create({ ...req.body, poster, owner });
+  res.status(201).json(result);
 };
 
 const updateById = async (req, res) => {

@@ -1,10 +1,15 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
-
+import gravatar from "gravatar";
+// const email = "beer@gmail.com";
+// const avatarUrl = gravatar.url(email);
+// console.log(avatarUrl);
 import { handleSaveError, addUpdateSettings } from "./hooks.js";
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.]?\w+)*(\.\w{2,3})+$/;
-
+const generateAvatarUrl = function () {
+  return gravatar.url(this.email);
+};
 const userSchema = new Schema(
   {
     password: {
@@ -27,7 +32,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      // required: true,
+      default: generateAvatarUrl,
     },
     owner: {
       type: Schema.Types.ObjectId,
