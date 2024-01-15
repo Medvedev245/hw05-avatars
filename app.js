@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 //создать мидлвару чтения файлов
 app.use(express.static("public"));
+//мидлвара для публичной роздачи - если придет запрос, срзу ищи в этой папке
 
 app.use("/users", authRouter);
 app.use("/api/contacts", contactsRouter);

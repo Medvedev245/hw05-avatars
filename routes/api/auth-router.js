@@ -2,9 +2,7 @@
 import express from "express";
 
 import authController from "../../controllers/auth-controller.js";
-
-import { isValidId } from "../../middlewares/isValidId.js";
-
+import { upload } from "../../middlewares/upload.js";
 import {
   isEmptyBody,
   isEmptyBodyPatch,
@@ -42,11 +40,10 @@ authRouter.get("/current", authenticate, authController.GetCurrent);
 authRouter.post("/signout", authenticate, authController.signout);
 export default authRouter;
 
-// import contactsController from "../../controllers/contacts-controller.js";
-
-// import {
-//   isEmptyBody,
-//   isEmptyBodyPatch,
-//   isEmptyBodyPut,
-// } from "../../middlewares/isEmptyBody.js";
-// import { isValidId } from "../../middlewares/isValidId.js";
+//Изменение аватарки
+authRouter.patch(
+  "/avatars",
+  upload.single("avatarURL"),
+  authenticate,
+  authController.ChangeAvatar
+);

@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-// import gravatar from "gravatar";
-
 import app from "./app.js";
 
 import { DB_HOST } from "./config.js";
@@ -13,9 +11,6 @@ mongoose
   .then(() => {
     app.listen(3000, () => {
       console.log("Database connection successful :)");
-      // const email = "beer@gmail.com";
-      // const avatarUrl = gravatar.url(email);
-      // console.log(avatarUrl);
     });
   })
   .catch((error) => {

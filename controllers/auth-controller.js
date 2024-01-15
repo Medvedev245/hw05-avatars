@@ -3,12 +3,17 @@ import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 
+import path from "path";
+
+import fs from "fs/promises";
+
 import { HttpError } from "../Helpers/index.js";
 
 import { ctrlWrapper } from "../decorators/index.js";
 
 import { JWT_SECRET } from "../config.js";
-// console.log("1", JWT_SECRET);
+
+const avatarPath = path.resolve("public", "avatars");
 
 //registration
 const signup = async (req, res) => {
@@ -81,9 +86,33 @@ const signout = async (req, res) => {
   });
 };
 
+const ChangeAvatar = async (req, res) => {
+  if (!req.file) {
+    res.status(400).json({ message: "No file uploaded" });
+  }
+
+  // console.log(req.user);
+  let { avatarURL, _id } = req.user;
+  // console.log(avatarURL);
+  // console.log(req.file);
+
+  //перемещаем файл
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(avatarPath, filename);
+  await fs.rename(oldPath, newPath);
+  //создаем новый путь к перемещенному файлу
+  const poster = path.join("avatars", filename);
+  avatarURL = poster;
+  // console.log(poster);
+  const result = await User.findByIdAndUpdate(_id, { avatarURL });
+
+  res.status(200).json(result.avatarURL);
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
   GetCurrent: ctrlWrapper(GetCurrent),
   signout: ctrlWrapper(signout),
+  ChangeAvatar: ctrlWrapper(ChangeAvatar),
 };
