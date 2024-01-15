@@ -35,8 +35,8 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
   const { _id: owner } = req.user;
-  console.log(req.body);
-  console.log(req.file);
+  // console.log(req.body);
+  // console.log(req.file);
   //перемещаем файл
   const { path: oldPath, filename } = req.file;
   const newPath = path.join(avatarPath, filename);

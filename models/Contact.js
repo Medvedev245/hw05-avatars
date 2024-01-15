@@ -25,6 +25,10 @@ const contactSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    poster: {
+      type: String,
+      required: true,
+    },
   },
   { versionKey: false }
 );

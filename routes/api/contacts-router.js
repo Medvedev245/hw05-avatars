@@ -1,6 +1,6 @@
 import express from "express";
 import contactsController from "../../controllers/contacts-controller.js";
-// import isValidId from "../../middlewares/isValidId.js";
+
 import {
   isEmptyBody,
   isEmptyBodyPatch,
@@ -10,8 +10,6 @@ import {
 import { upload } from "../../middlewares/upload.js";
 
 import { isValidId } from "../../middlewares/isValidId.js";
-
-// import { validateBody } from "../../decorators/index.js";
 
 import { contactUpdateFavoriteShema } from "../../models/Contact.js";
 import { authenticate } from "../../middlewares/authenticate.js";
