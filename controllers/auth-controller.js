@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 
+import Jimp from "jimp";
+
 import path from "path";
 
 import fs from "fs/promises";
@@ -93,13 +95,23 @@ const ChangeAvatar = async (req, res) => {
 
   // console.log(req.user);
   let { avatarURL, _id } = req.user;
-  // console.log(avatarURL);
-  console.log(req.file);
+  // console.log("qqq", Jimp);
+  // console.log(req.file);
 
   //перемещаем файл
   const { path: oldPath, filename } = req.file;
-  const newPath = path.join(avatarPath, filename);
-  await fs.rename(oldPath, newPath);
+
+  Jimp.read(oldPath, (err, image) => {
+    // console.log(image);
+    if (err) throw err;
+
+    image.resize(250, 250); // изменяем ширину на 800 пикселей, а высоту автоматически
+
+    const newPath = path.join(avatarPath, filename);
+    image.write(newPath); // сохраняем измененное изображение
+  });
+  // oldPath
+  // await fs.rename(oldPath, newPath);
   //создаем новый путь к перемещенному файлу
   const poster = path.join("avatars", filename);
   avatarURL = poster;
