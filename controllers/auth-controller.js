@@ -94,7 +94,7 @@ const ChangeAvatar = async (req, res) => {
   // console.log(req.user);
   let { avatarURL, _id } = req.user;
   // console.log(avatarURL);
-  // console.log(req.file);
+  console.log(req.file);
 
   //перемещаем файл
   const { path: oldPath, filename } = req.file;
