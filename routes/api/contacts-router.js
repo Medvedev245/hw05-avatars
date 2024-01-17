@@ -25,12 +25,7 @@ contactsRouter.get("/", contactsController.getAll);
 contactsRouter.get("/:contactId", isValidId, contactsController.getById);
 
 //isEmptyBody - мидлвара проверяет пустой или нет?
-contactsRouter.post(
-  "/",
-  upload.single("avatarURL"),
-  isEmptyBody,
-  contactsController.add
-);
+contactsRouter.post("/", isEmptyBody, contactsController.add);
 
 //
 contactsRouter.put(

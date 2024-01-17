@@ -43,28 +43,6 @@ const add = async (req, res) => {
   res.status(201).json(result);
 };
 
-//не правильно
-// const add = async (req, res) => {
-//   const { _id: owner } = req.user;
-//   console.log(req.body);
-//   console.log(req.file);
-//   //перемещаем файл
-//   const { path: oldPath, filename } = req.file;
-//   const newPath = path.join(avatarPath, filename);
-//   await fs.rename(oldPath, newPath);
-//   //создаем новый путь к перемещенному файлу
-//   const poster = path.join("avatars", filename);
-
-//   const { error } = contactAddSchema.validate(req.body);
-//   if (error) {
-//     throw HttpError(400, error.message);
-//   }
-//   const result = await Contact.create({ ...req.body, poster, owner });
-//   console.log(oldPath);
-//   console.log(newPath);
-//   res.status(201).json(result);
-// };
-
 const updateById = async (req, res) => {
   const { error } = contactUpdateSchema.validate(req.body);
   if (error) {
